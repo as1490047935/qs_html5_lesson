@@ -30,16 +30,18 @@
       font-size: 20px;
       line-height: 30px;
     }
-    .example img{
+    .example img {
       width: 160px;
-      
-      /* 这里会可能会撑一下界面 */
-      /* http 请求与响应 */
+      /* height: auto; */
+      /* http 请求与响应
+      chunk 到达
+      撑一下页面 */
     }
-    .imgBox{
+    .imgBox {
       margin-bottom: 10px;
-      border-bottom: 1px solid #333333;
+      border-bottom: 1px solid #333;
     }
+
   </style>
 </head>
 <body ontouchstart>
@@ -51,22 +53,35 @@
       <img src="./asset/test.png"
        id="pinchImg">
     </div>
+    <div class="title">rotate</div>
+    <div class="imgBox">
+      <img src="./asset/test.png"
+       alt="" id="rotateImg"/>
+    </div>
   </div>
-  <!-- gesture 很复杂 ，ontouchstart -->
-  <!-- ontouchmove  ontouchend event -->
+  <!-- gesture 很复杂， ontouchstart
+  ontouchmove ontouchend event -->
   <script src="./asset/transform.js"></script>
-  <script src="./asset/alloy finger.js"></script>
+  <script src="./asset/alloy_finger.js"></script>
   <script>
-  var pinchImg=doucument.getElementById('pingchImg')
+  var pinchImg = document.getElementById('pinchImg');
   Transform(pinchImg);
-  var initScale=1;
-  new AlloyFinger(pinchImg,{  
-      tap:function(){
-    
-        console.log ('tab一下');
-        pinchImg.initScale=pinchImg.scaleY=initScale*2 
-      }
+  var initScale = 1;
+  new AlloyFinger(pinchImg, {
+    pinch: function(evt) {
+      console.log('tap一下');
+      pinchImg.scaleX=
+      pinchImg.scaleY= 
+      initScale*evt.zoom
+    }
   })
+  var rotateImg = document.getElementById('rotateImg');
+  Transform(rotateImg);
+  new AlloyFinger(rotateImg, {
+    rotate: function(evt) {
+      rotateImg.rotateZ += evt.angle;
+    }
+  });
   </script>
 </body>
 </html>
