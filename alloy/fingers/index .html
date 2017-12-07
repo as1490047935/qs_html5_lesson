@@ -41,6 +41,7 @@
       margin-bottom: 10px;
       border-bottom: 1px solid #333;
     }
+
     .swipeBox {
       height: 160px;
       width: 160px;
@@ -74,39 +75,6 @@
     .nuclear-nav a.active {
       background-color: #ffd800;
     }
-    .longTapBox{
-            position: relative;
-            margin: 0 auto;
-            width: 160px;
-            height: 160px;
-            overflow: hidden;
-            -webkit-user-select: none;
-            -webkit-user-drag: none;
-            -webkit-touch-callout: none;
-            user-select: none;
-            user-drag: none;
-            touch-callout: none;
-            -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
-        }
-        .longTapBox img{
-            pointer-events: none;
-        }
-        .overlay2,.overlay{
-            background-color: rgba(70, 70, 70, 0.8);
-            position: absolute;
-            top:0;
-            left: 0;
-            width: 160px;
-            height: 160px;
-            display: none;
-        }
-        .overlay2 img, .overlay img{
-            width: 40px;
-            height: 40px;
-            position: absolute;
-            top: 60px;
-            left: 60px;
-        }
   </style>
 </head>
 <body ontouchstart>
@@ -115,35 +83,26 @@
     gesture
     <div class="title">pinch</div>
     <div class="imgBox">
-      <img src="./asset/test.png"
+      <img src="./asset/1.png"
        id="pinchImg">
     </div>
     <div class="title">rotate</div>
     <div class="imgBox">
-      <img src="./asset/test.png"
+      <img src="./asset/2.png"
        alt="" id="rotateImg"/>
     </div>
     <div class="title">swipe</div>
     <div class="imgBox pb6">
       <div class="swipeBox">
         <div class="scroll" id="swipeScroll">
-          <img src="./asset/test.png" alt="">
-          <img src="./asset/test.png" alt="">
-          <img src="./asset/test.png" alt="">
+          <img src="./asset/3.png" alt="">
+          <img src="./asset/2.png" alt="">
+          <img src="./asset/1.png" alt="">
         </div>
         <div class="nuclear-nav">
           <a href="#" data-index="0" class="active"></a>
           <a href="#" data-index="1"></a>
           <a href="#" data-index="2"></a>
-        </div>
-      </div>
-    </div>
-    <div class="title">lognTap</div>
-    <div class="imgBox pb6">
-      <div class="longTapBox" id="longTapBox">
-        <img src="./asset/test.png" id="longTapImg">
-        <div class="overlay" id="overlay">
-          <img src="./asset/yes.png" alt="">
         </div>
       </div>
     </div>
@@ -157,6 +116,7 @@
   function ease(x) {
     return Math.sqrt(1 - Math.pow(x - 1, 2));
   }
+
   var pinchImg = document.getElementById('pinchImg');
   Transform(pinchImg);
   var initScale = 1;
@@ -181,9 +141,6 @@
   var  currentIndex = 0;
   Transform(swipeScroll);
   new AlloyFinger(swipeScroll, {
-    touchMove: function(evt) {
-      evt.preventDefault();
-    },
     swipe: function(evt) {
       // console.log(evt);
       if (evt.direction === 'Left') {
@@ -195,26 +152,7 @@
             activeNav(currentIndex);
           });
         }
-      } else if (evt.direction === 'Right') {
-        if (currentIndex > 0) {
-          currentIndex--;
-          new To(swipeScroll, 'translateX',
-           -160*currentIndex, 500, ease, function() {
-             activeNav(currentIndex);
-           })
-        }
       }
-    }
-  })
-  // logntap
-  var longTapBox = 
-    document.getElementById('longTapBox');
-  Transform(longTapBox);
-  var overlay = document.getElementById('overlay');
-  new AlloyFinger(longTapBox, {
-    longTap: function(evt) {
-      evt.preventDefault();
-      overlay.style.display = 'block';
     }
   })
   function activeNav(index) {
